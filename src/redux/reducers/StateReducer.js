@@ -11,8 +11,11 @@ const MainSlice = createSlice({
         setDataPrimaFetch: (state, action) => {
             state.dataPrimaFetch = action.payload;
         },
-        setGenericBoolean: (state, action) => {
-            state.genericBoolean = action.payload;
+        setGenericBooleanOn: (state) => {
+            state.genericBoolean = true;
+        },
+        setGenericBooleanOff: (state) => {
+            state.genericBoolean = false;
         },
     },
 });
@@ -31,15 +34,15 @@ export const fetchData = createAsyncThunk("mainState/fetchSomeData", (payload, t
            2- prendo da dentro lo state il valore che voglio prendere  */
     /* PARAM DA INSERIRE NELLA URL DELLA FETCH  */
 
-    const genericBoolean = thunkAPI.getState().State.genericBoolean;
-
+    /*     const genericBoolean = thunkAPI.getState().mainState.genericBoolean; */
+    /*  const genericBoolean = thunkAPI.getState().mainState.genericBoolean; */
     /* const booleanValue = thunkAPI.getState().booleanValue.isInLoading; */
 
     const url = `https://api.pexels.com/v1/search?query=${payload}`;
 
     fetch(url, optionsPexels)
         .then((fetchResponse) => {
-            console.log(genericBoolean);
+            /*    console.log(genericBoolean); */
             console.log(fetchResponse);
             if (!fetchResponse.ok) {
                 if (fetchResponse.status > 400 && fetchResponse.status < 500) {
@@ -53,18 +56,20 @@ export const fetchData = createAsyncThunk("mainState/fetchSomeData", (payload, t
                     throw new Error("SERVER SPOMPATO, NON FUNZIA??");
                 }
             } else {
+                /*    thunkAPI.dispatch(setGenericBooleanOff()); */
                 return fetchResponse.json();
             }
         })
         .then((fetchData) => {
             /* salvo nello store usando il reducer dataprimafetch */
-
             thunkAPI.dispatch(setDataPrimaFetch(fetchData));
         })
         .catch((error) => {
             thunkAPI.rejectWithValue({ error: error.message });
         });
+
+    /*  .finally(thunkAPI.dispatch(setGenericBooleanOff())); */
 });
 
-export const { setDataPrimaFetch, setGenericBoolean } = MainSlice.actions;
+export const { setDataPrimaFetch, setGenericBooleanOff, setGenericBooleanOn } = MainSlice.actions;
 export default MainSlice.reducer;
