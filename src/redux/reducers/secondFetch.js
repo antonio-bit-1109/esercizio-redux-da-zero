@@ -1,5 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const SecondFetchSlice = createSlice({
+    name: "SecondFetch",
+    initialState: {
+        dataSecondoFetch: null,
+    },
+
+    reducers: {
+        setDataSecondoFetch: (state, action) => {
+            state.dataSecondoFetch = action.payload;
+        },
+    },
+});
+
 export const fetchData2 = createAsyncThunk("mainState/fetchSomeData", (payload, thunkAPI) => {
     const optionsPexels = {
         method: "GET",
@@ -44,17 +57,5 @@ export const fetchData2 = createAsyncThunk("mainState/fetchSomeData", (payload, 
         });
 });
 
-const SecondFetchSlice = createSlice({
-    name: "SecondFetch",
-    initialState: {
-        dataSecondoFetch: null,
-    },
-
-    reducers: {
-        setDataSecondoFetch: (state, action) => {
-            state.dataSecondoFetch = action.payload;
-        },
-    },
-});
 export const { setDataSecondoFetch } = SecondFetchSlice.actions;
 export default SecondFetchSlice.reducer;

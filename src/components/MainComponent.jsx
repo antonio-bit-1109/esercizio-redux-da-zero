@@ -8,13 +8,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Spinner } from "react-bootstrap";
-import { setGenericBooleanOff } from "../redux/reducers/StateReducer";
 
 const MainComponent = () => {
     /* dispatch per fare il setState dello stato */
     const dispatch = useDispatch();
 
-    const datoPrimaFetch = useSelector((state) => state.State.dataPrimaFetch);
+    const datoPrimaFetch = useSelector((state) => state.datoPrimaFetch.dataPrimaFetch);
     console.log("datoPrimaFetch", datoPrimaFetch);
 
     const datoSecondaFetch = useSelector((state) => state.secondFetch.dataSecondoFetch);
@@ -22,7 +21,7 @@ const MainComponent = () => {
 
     /* valore boolean che quanto faccio la get dalla fetch se la fetch va a buon fine diventa false */
 
-    const booleanValue = useSelector((state) => state.State.genericBoolean);
+    const booleanValue = useSelector((state) => state.datoPrimaFetch.genericBoolean);
 
     useEffect(() => {
         dispatch(fetchData("amsterdam"));

@@ -5,7 +5,7 @@ import loaderReducer from "../reducers/loaderReducer";
 
 export const store = configureStore({
     reducer: {
-        State: StateReducer, // null
+        datoPrimaFetch: StateReducer, // null
         secondFetch: secondFetch, // null
         booleanValue: loaderReducer, // true
     },
