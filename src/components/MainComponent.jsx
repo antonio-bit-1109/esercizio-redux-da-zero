@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Spinner } from "react-bootstrap";
+import { setGenericBooleanOff } from "../redux/reducers/StateReducer";
 
 const MainComponent = () => {
     /* dispatch per fare il setState dello stato */
@@ -20,8 +21,8 @@ const MainComponent = () => {
     console.log("datoSecondaFetch", datoSecondaFetch);
 
     /* valore boolean che quanto faccio la get dalla fetch se la fetch va a buon fine diventa false */
+
     const booleanValue = useSelector((state) => state.State.genericBoolean);
-    console.log("booleanValue dentro main component", booleanValue);
 
     useEffect(() => {
         dispatch(fetchData("amsterdam"));
@@ -30,9 +31,12 @@ const MainComponent = () => {
 
     return (
         <div>
+            <div className=" d-flex justify-content-center">
+                {booleanValue && <Spinner className="display-1" variant="warning" />}
+            </div>
+
             {datoPrimaFetch && (
                 <Container>
-                    {booleanValue && <Spinner variant="warning" />}
                     <Row>
                         {datoPrimaFetch.photos.slice(0, 6).map((singleObj) => (
                             <Col key={singleObj.id}>

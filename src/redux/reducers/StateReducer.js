@@ -20,7 +20,7 @@ const MainSlice = createSlice({
     },
 });
 
-export const fetchData = createAsyncThunk("mainState/fetchSomeData", (payload, thunkAPI) => {
+export const fetchData = createAsyncThunk("mainState/fetchSomeData", async (payload, thunkAPI) => {
     const optionsPexels = {
         method: "GET",
         headers: {
@@ -29,46 +29,36 @@ export const fetchData = createAsyncThunk("mainState/fetchSomeData", (payload, t
         },
     };
 
-    /* ti serve una stringa per fare la chiamata fetch da inserire come parametro? */
-    /* 1- identifico il nome dello slice 
-           2- prendo da dentro lo state il valore che voglio prendere  */
-    /* PARAM DA INSERIRE NELLA URL DELLA FETCH  */
-
-    /*     const genericBoolean = thunkAPI.getState().mainState.genericBoolean; */
-    /*  const genericBoolean = thunkAPI.getState().mainState.genericBoolean; */
-    /* const booleanValue = thunkAPI.getState().booleanValue.isInLoading; */
-
     const url = `https://api.pexels.com/v1/search?query=${payload}`;
 
-    fetch(url, optionsPexels)
-        .then((fetchResponse) => {
-            /*    console.log(genericBoolean); */
-            console.log(fetchResponse);
-            if (!fetchResponse.ok) {
-                if (fetchResponse.status > 400 && fetchResponse.status < 500) {
-                    if (fetchResponse.status === 429) {
-                        throw new Error("429 INFAME PER TE TANTE COSE BRUTTE");
-                    } else {
-                        throw new Error("STAI CAPPELLANDO , RIGUARDA QUELLO CHE HAI SCRITTO");
-                    }
-                }
-                if (fetchResponse.status > 500 && fetchResponse.status < 600) {
-                    throw new Error("SERVER SPOMPATO, NON FUNZIA??");
-                }
-            } else {
-                /*    thunkAPI.dispatch(setGenericBooleanOff()); */
-                return fetchResponse.json();
-            }
-        })
-        .then((fetchData) => {
-            /* salvo nello store usando il reducer dataprimafetch */
-            thunkAPI.dispatch(setDataPrimaFetch(fetchData));
-        })
-        .catch((error) => {
-            thunkAPI.rejectWithValue({ error: error.message });
-        });
+    try {
+        thunkAPI.dispatch(setGenericBooleanOff());
+        thunkAPI.dispatch(setGenericBooleanOn());
 
-    /*  .finally(thunkAPI.dispatch(setGenericBooleanOff())); */
+        // Set to true before fetching
+        const fetchResponse = await fetch(url, optionsPexels);
+
+        if (!fetchResponse.ok) {
+            if (fetchResponse.status > 400 && fetchResponse.status < 500) {
+                if (fetchResponse.status === 429) {
+                    throw new Error("429 INFAME PER TE TANTE COSE BRUTTE");
+                } else {
+                    throw new Error("STAI CAPPELLANDO , RIGUARDA QUELLO CHE HAI SCRITTO");
+                }
+            }
+            if (fetchResponse.status > 500 && fetchResponse.status < 600) {
+                throw new Error("SERVER SPOMPATO, NON FUNZIA??");
+            }
+        }
+
+        const fetchData = await fetchResponse.json();
+
+        thunkAPI.dispatch(setDataPrimaFetch(fetchData));
+    } catch (error) {
+        thunkAPI.rejectWithValue({ error: error.message });
+    } finally {
+        thunkAPI.dispatch(setGenericBooleanOff());
+    }
 });
 
 export const { setDataPrimaFetch, setGenericBooleanOff, setGenericBooleanOn } = MainSlice.actions;
