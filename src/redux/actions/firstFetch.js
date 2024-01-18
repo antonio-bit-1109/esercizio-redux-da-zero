@@ -1,24 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const MainSlice = createSlice({
-    name: "mainState",
-    initialState: {
-        dataPrimaFetch: null,
-        genericBoolean: true,
-    },
-
-    reducers: {
-        setDataPrimaFetch: (state, action) => {
-            state.dataPrimaFetch = action.payload;
-        },
-        setGenericBooleanOn: (state) => {
-            state.genericBoolean = true;
-        },
-        setGenericBooleanOff: (state) => {
-            state.genericBoolean = false;
-        },
-    },
-});
+import { setGenericBooleanOff, setGenericBooleanOn, setDataPrimaFetch } from "../reducers/firstFetch";
 
 export const fetchData = (payload) => async (dispatch) => {
     const optionsPexels = {
@@ -60,6 +40,3 @@ export const fetchData = (payload) => async (dispatch) => {
         dispatch(setGenericBooleanOff());
     }
 };
-
-export const { setDataPrimaFetch, setGenericBooleanOff, setGenericBooleanOn } = MainSlice.actions;
-export default MainSlice.reducer;

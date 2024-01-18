@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchData } from "../redux/reducers/StateReducer";
-import { fetchData2 } from "../redux/reducers/secondFetch";
+import { fetchData } from "../redux/actions/firstFetch";
+import { fetchData2 } from "../redux/actions/secondFetch";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
@@ -37,15 +37,10 @@ const MainComponent = () => {
             {datoPrimaFetch && (
                 <Container>
                     <Row>
-                        {datoPrimaFetch.photos.slice(0, 6).map((singleObj) => (
-                            <Col key={singleObj.id}>
+                        {datoPrimaFetch.photos.slice(0, 9).map((singleObj) => (
+                            <Col sm={12} md={8} lg={6} xl={6} xxl={6} key={singleObj.id}>
                                 <Card>
-                                    <Card.Img
-                                        style={{ width: "300px" }}
-                                        variant="top"
-                                        src={singleObj.src.original}
-                                        alt={`Photo ${singleObj.height}`}
-                                    />
+                                    <Card.Img src={singleObj.src.original} alt={`Photo ${singleObj.height}`} />
                                     <Card.Body>
                                         <Card.Title>{singleObj.alt}</Card.Title>
 

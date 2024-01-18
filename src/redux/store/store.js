@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import StateReducer from "../reducers/StateReducer";
+import StateReducer from "../reducers/firstFetch";
 import secondFetch from "../reducers/secondFetch";
 import loaderReducer from "../reducers/loaderReducer";
 
