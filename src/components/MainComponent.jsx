@@ -1,15 +1,26 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData } from "../redux/functions/firstFetch";
-import { fetchData2 } from "../redux/functions/secondFetch";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Spinner } from "react-bootstrap";
+import { setDataPrimaFetch } from "../redux/reducers/firstFetch";
+import { setDataSecondoFetch } from "../redux/reducers/secondFetch";
+import { setGenericBooleanOff } from "../redux/reducers/firstFetch";
 
 const MainComponent = () => {
+    const url = `https://api.pexels.com/v1/search?query=`;
+
+    const optionsPexels = {
+        method: "GET",
+        headers: {
+            Authorization: "7Ye7PHnNDdVmd43T5cthTwaF0I2AipmjtizxjFtVcXnzQIgCqJYlTLXP",
+            "Content-type": "application/json",
+        },
+    };
     /* dispatch per fare il setState dello stato */
     const dispatch = useDispatch();
 
@@ -24,8 +35,8 @@ const MainComponent = () => {
     const booleanValue = useSelector((state) => state.datoPrimaFetch.genericBoolean);
 
     useEffect(() => {
-        dispatch(fetchData("amsterdam"));
-        dispatch(fetchData2("rome"));
+        dispatch(fetchData(url, "amsterdam", optionsPexels, setDataPrimaFetch, setGenericBooleanOff));
+        dispatch(fetchData(url, "rome", optionsPexels, setDataSecondoFetch));
     }, []);
 
     return (

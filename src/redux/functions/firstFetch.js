@@ -1,19 +1,10 @@
-import { setGenericBooleanOff, setDataPrimaFetch } from "../reducers/firstFetch";
+/* import { setGenericBooleanOff } from "../reducers/firstFetch"; */
 
-export const fetchData = (url, parametroOpzionale) => async (dispatch) => {
-    const optionsPexels = {
-        method: "GET",
-        headers: {
-            Authorization: "7Ye7PHnNDdVmd43T5cthTwaF0I2AipmjtizxjFtVcXnzQIgCqJYlTLXP",
-            "Content-type": "application/json",
-        },
-    };
-
-    const url = `https://api.pexels.com/v1/search?query=${parametroOpzionale}`;
-
+/* FETCH MODALE RIUTILIZZABILE   */
+export const fetchData = (url, parametroOpzionale, options, action, otherAction) => async (dispatch) => {
     try {
         // Set to true before fetching
-        const fetchResponse = await fetch(url, optionsPexels);
+        const fetchResponse = await fetch(url + parametroOpzionale, options);
 
         if (!fetchResponse.ok) {
             if (fetchResponse.status > 400 && fetchResponse.status < 500) {
@@ -30,8 +21,10 @@ export const fetchData = (url, parametroOpzionale) => async (dispatch) => {
 
         const fetchData = await fetchResponse.json();
 
-        dispatch(setDataPrimaFetch(fetchData));
-        dispatch(setGenericBooleanOff());
+        dispatch(action(fetchData));
+
+        /*  QUALCOSA DA FARE FINITA LA FETCH ?? */
+        dispatch(otherAction());
     } catch (error) {
         console.error("Error fetching data:", error);
     }
