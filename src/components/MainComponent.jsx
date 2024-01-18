@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchData } from "../redux/actions/firstFetch";
-import { fetchData2 } from "../redux/actions/secondFetch";
+import { fetchData } from "../redux/functions/firstFetch";
+import { fetchData2 } from "../redux/functions/secondFetch";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";

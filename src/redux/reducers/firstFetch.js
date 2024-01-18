@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+/*  SLICE, FETTA CHE CONTIENE STATO/I E MODIFICATORI DELLO STATO (ACTIONS) */
 const MainSlice = createSlice({
     name: "mainState",
     initialState: {
@@ -7,6 +8,7 @@ const MainSlice = createSlice({
         genericBoolean: true,
     },
 
+    /* QUESTE SONO LE ACTION  ACTIONS = I MIEI SETTER DI GONI SINGOLO STATO  */
     reducers: {
         setDataPrimaFetch: (state, action) => {
             state.dataPrimaFetch = action.payload;
