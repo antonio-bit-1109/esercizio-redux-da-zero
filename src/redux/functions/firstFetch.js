@@ -24,7 +24,9 @@ export const fetchData = (url, parametroOpzionale, options, action, otherAction)
         dispatch(action(fetchData));
 
         /*  QUALCOSA DA FARE FINITA LA FETCH ?? */
-        dispatch(otherAction());
+        if (otherAction) {
+            dispatch(otherAction());
+        }
     } catch (error) {
         console.error("Error fetching data:", error);
     }
