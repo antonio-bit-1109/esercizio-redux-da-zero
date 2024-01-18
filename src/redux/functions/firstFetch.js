@@ -12,9 +12,6 @@ export const fetchData = (payload) => async (dispatch) => {
     const url = `https://api.pexels.com/v1/search?query=${payload}`;
 
     try {
-        dispatch(setGenericBooleanOff());
-        dispatch(setGenericBooleanOn());
-
         // Set to true before fetching
         const fetchResponse = await fetch(url, optionsPexels);
 
@@ -34,9 +31,8 @@ export const fetchData = (payload) => async (dispatch) => {
         const fetchData = await fetchResponse.json();
 
         dispatch(setDataPrimaFetch(fetchData));
+        dispatch(setGenericBooleanOff());
     } catch (error) {
         console.error("Error fetching data:", error);
-    } finally {
-        dispatch(setGenericBooleanOff());
     }
 };
