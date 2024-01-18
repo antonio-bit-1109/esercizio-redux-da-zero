@@ -1,7 +1,7 @@
 /* import { setGenericBooleanOff } from "../reducers/firstFetch"; */
 
 /* FETCH MODALE RIUTILIZZABILE   */
-export const fetchData = (url, parametroOpzionale, options, action, otherAction) => async (dispatch) => {
+export const fetchData = (url, parametroOpzionale, options, action, lastAction) => async (dispatch) => {
     try {
         // Set to true before fetching
         const fetchResponse = await fetch(url + parametroOpzionale, options);
@@ -24,8 +24,8 @@ export const fetchData = (url, parametroOpzionale, options, action, otherAction)
         dispatch(action(fetchData));
 
         /*  QUALCOSA DA FARE FINITA LA FETCH ?? */
-        if (otherAction) {
-            dispatch(otherAction());
+        if (lastAction) {
+            dispatch(lastAction());
         }
     } catch (error) {
         console.error("Error fetching data:", error);
