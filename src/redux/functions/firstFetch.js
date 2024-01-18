@@ -1,6 +1,6 @@
 import { setGenericBooleanOff, setDataPrimaFetch } from "../reducers/firstFetch";
 
-export const fetchData = (payload) => async (dispatch) => {
+export const fetchData = (url, parametroOpzionale) => async (dispatch) => {
     const optionsPexels = {
         method: "GET",
         headers: {
@@ -9,7 +9,7 @@ export const fetchData = (payload) => async (dispatch) => {
         },
     };
 
-    const url = `https://api.pexels.com/v1/search?query=${payload}`;
+    const url = `https://api.pexels.com/v1/search?query=${parametroOpzionale}`;
 
     try {
         // Set to true before fetching
