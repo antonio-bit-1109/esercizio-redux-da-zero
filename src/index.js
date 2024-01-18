@@ -17,4 +17,4 @@ root.render(
     </Provider>
 );
 
-/* il persistentGate riguarda index e store ?? */
+/* il persistentGate riguarda index e store */

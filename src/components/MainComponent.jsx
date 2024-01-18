@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchData } from "../redux/functions/firstFetch";
 import Button from "react-bootstrap/Button";
@@ -12,6 +12,8 @@ import { setDataSecondoFetch } from "../redux/reducers/secondFetch";
 import { setGenericBooleanOff } from "../redux/reducers/firstFetch";
 
 const MainComponent = () => {
+    const [title, setTitle] = useState("Paginetta caruccetta");
+
     const url = `https://api.pexels.com/v1/search?query=`;
 
     const optionsPexels = {
@@ -47,6 +49,13 @@ const MainComponent = () => {
 
             {datoPrimaFetch && (
                 <Container>
+                    <Row>
+                        <Col>
+                            <div>
+                                <h1 className="display-1 text-center my-4">{title}</h1>
+                            </div>
+                        </Col>
+                    </Row>
                     <Row>
                         {datoPrimaFetch.photos.slice(0, 9).map((singleObj) => (
                             <Col sm={12} md={8} lg={6} xl={6} xxl={6} key={singleObj.id}>
