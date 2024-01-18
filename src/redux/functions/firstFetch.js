@@ -1,4 +1,4 @@
-import { setGenericBooleanOff, setGenericBooleanOn, setDataPrimaFetch } from "../reducers/firstFetch";
+import { setGenericBooleanOff, setDataPrimaFetch } from "../reducers/firstFetch";
 
 export const fetchData = (payload) => async (dispatch) => {
     const optionsPexels = {
