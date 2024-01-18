@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const SecondFetchSlice = createSlice({
     name: "SecondFetch",
@@ -13,7 +13,7 @@ const SecondFetchSlice = createSlice({
     },
 });
 
-export const fetchData2 = createAsyncThunk("mainState/fetchSomeData", (payload, thunkAPI) => {
+export const fetchData2 = (payload) => async (dispatch) => {
     const optionsPexels = {
         method: "GET",
         headers: {
@@ -50,12 +50,12 @@ export const fetchData2 = createAsyncThunk("mainState/fetchSomeData", (payload, 
         })
         .then((fetchData) => {
             /* salvo nello store usando il reducer dataprimafetch */
-            thunkAPI.dispatch(setDataSecondoFetch(fetchData));
+            dispatch(setDataSecondoFetch(fetchData));
         })
         .catch((error) => {
-            thunkAPI.rejectWithValue({ error: error.message });
+            console.error("Error fetching data:", error);
         });
-});
+};
 
 export const { setDataSecondoFetch } = SecondFetchSlice.actions;
 export default SecondFetchSlice.reducer;

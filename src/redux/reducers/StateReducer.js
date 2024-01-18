@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const MainSlice = createSlice({
     name: "mainState",
@@ -20,7 +20,7 @@ const MainSlice = createSlice({
     },
 });
 
-export const fetchData = createAsyncThunk("mainState/fetchSomeData", async (payload, thunkAPI) => {
+export const fetchData = (payload) => async (dispatch) => {
     const optionsPexels = {
         method: "GET",
         headers: {
@@ -32,8 +32,8 @@ export const fetchData = createAsyncThunk("mainState/fetchSomeData", async (payl
     const url = `https://api.pexels.com/v1/search?query=${payload}`;
 
     try {
-        thunkAPI.dispatch(setGenericBooleanOff());
-        thunkAPI.dispatch(setGenericBooleanOn());
+        dispatch(setGenericBooleanOff());
+        dispatch(setGenericBooleanOn());
 
         // Set to true before fetching
         const fetchResponse = await fetch(url, optionsPexels);
@@ -53,13 +53,13 @@ export const fetchData = createAsyncThunk("mainState/fetchSomeData", async (payl
 
         const fetchData = await fetchResponse.json();
 
-        thunkAPI.dispatch(setDataPrimaFetch(fetchData));
+        dispatch(setDataPrimaFetch(fetchData));
     } catch (error) {
-        thunkAPI.rejectWithValue({ error: error.message });
+        console.error("Error fetching data:", error);
     } finally {
-        thunkAPI.dispatch(setGenericBooleanOff());
+        dispatch(setGenericBooleanOff());
     }
-});
+};
 
 export const { setDataPrimaFetch, setGenericBooleanOff, setGenericBooleanOn } = MainSlice.actions;
 export default MainSlice.reducer;
